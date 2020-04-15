@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* font-family: "Exo 2", sans-serif; */
+  font-family: "Roboto", sans-serif;
+
+  background-color: #fff;
+  color: #333;
+}
+header {
+  font-size: 20px;
+  height: 64px;
+  background-color: #c00201;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  color: white;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+select {
+  width: 300px;
+  height: 50px;
+  font-size: 20px;
+  background-color: #fefefe;
+  outline: none;
+}
+
+textarea {
+  width: 600px;
+  resize: none;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  padding: 5px;
+  outline: none;
+}
+
+.previewContainer {
+  width: 600px;
+  word-wrap: wrap;
+  display: inline-block;
+  margin-top: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.spoken_word {
+  color: #c00201;
+  font-weight: bold;
+  font-size: 18px;
+  transition: all 0.1s;
+}
+
+/********* Range Slider CSS ********/
+
+.slidecontainer {
+  width: 100%;
+}
+.slider {
+  -webkit-appearance: none;
+  width: 300px;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: opacity 0.15s ease-in-out;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #c00201;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #c00201;
+  cursor: pointer;
+}
+
+/*********************** Buttons *********************/
+.btn {
+  position: relative;
+
+  display: block;
+  padding: 0;
+
+  overflow: hidden;
+
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+
+  background-color: #2ecc71;
+  color: #ecf0f1;
+
+  transition: background-color 0.3s;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #27ae60;
+}
+
+.btn > * {
+  position: relative;
+}
+
+.btn span {
+  display: block;
+  padding: 12px 24px;
+  font-size: 18px;
+}
+
+.btn:before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: block;
+  width: 0;
+  padding-top: 0;
+
+  border-radius: 100%;
+
+  background-color: rgba(236, 240, 241, 0.3);
+
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.btn:active:before {
+  width: 120%;
+  padding-top: 120%;
+
+  transition: width 0.2s ease-out, padding-top 0.2s ease-out;
+}
+
+.btn.orange {
+  background-color: #e67e22;
+}
+
+.btn.orange:hover,
+.btn.orange:focus {
+  background-color: #d35400;
+}
+
+.btn.red {
+  background-color: #c00201;
+}
+
+.btn.red:hover,
+.btn.red:focus {
+  background-color: #c0392b;
+}

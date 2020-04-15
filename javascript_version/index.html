@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      Text To Speech | kablosuzkedi
+    </header>
+
+    <div class="app-container">
+      <select name="" id="voiceList"></select>
+      <br />
+      <div class="slidercontainer">
+        <input class="slider" type="range" min="0.5" max="3" id="speed" />
+      </div>
+      <span id="output"></span>
+      <br />
+      <textarea name="" id="textToSpeech" cols="30" rows="10">
+kablosuzkedi'nin yeni videosuna hoşgeldiniz, ben Yelda. Eveet bu dersimizde sizlerle beraber Text To Speech konusunu göreceğiz. Şimdi vakit kaybetmeden sözü Gökhan Kandemir'e bırakıyorum.</textarea
+      >
+      <div class="previewContainer"></div>
+      <br />
+      <button class="btn red" type="button" id="speakBtn">
+        <span>Söyle Bakalım Şekerim!</span>
+      </button>
+    </div>
+
+    <script>
+      const voiceList = document.querySelector("#voiceList");
+      const textToSpeech = document.querySelector("#textToSpeech");
+      const speakBtn = document.querySelector("#speakBtn");
+      const previewContainer = document.querySelector(".previewContainer");
+      const speed = document.querySelector("#speed");
+      const output = document.querySelector("#output");
+      speed.step = 0.5;
+      speed.value = 1;
+      output.innerHTML = speed.value;
+
+      speed.oninput = function() {
+        output.innerHTML = this.value;
+      };
+      let tts = window.speechSynthesis;
+      let voices = [];
+      let words = [];
+      setVoices();
+
+      speakBtn.addEventListener("click", () => {
+        words = textToSpeech.value.split(" ");
+        previewContainer.innerHTML = words
+          .map((i, index) => `<span id="spoken_word_${index}">${i}</span>`)
+          .join(" ");
+
+        let toSpeak = new SpeechSynthesisUtterance(textToSpeech.value);
+        const selectedVoiceName = voiceList.selectedOptions[0].getAttribute(
+          "data-name"
+        );
+        const foundVoice = voices.find(v => v.name == selectedVoiceName);
+        toSpeak.voice = foundVoice;
+
+        toSpeak.rate = speed.value;
+        tts.speak(toSpeak);
+        toSpeak.onboundary = (event, index) => {
+          // console.log("event", event);
+          const spokenWord = event.utterance.text.substr(
+            event.charIndex,
+            event.charLength
+          );
+          document
+            .querySelector(
+              `.previewContainer #spoken_word_${words.findIndex(
+                w => w == spokenWord
+              )}`
+            )
+            .classList.add("spoken_word");
+        };
+      });
+
+      async function setVoices() {
+        getVoices().then(voice_list => {
+          voices = voice_list;
+          voiceList.innerHTML = "";
+          voice_list.forEach(voice => {
+            let option = document.createElement("option");
+            option.textContent = `${voice.name} - ${voice.lang}`;
+            option.setAttribute("data-lang", voice.lang);
+            option.setAttribute("data-name", voice.name);
+            if (voice.lang == "tr-TR") {
+              option.setAttribute("selected", "");
+            }
+            voiceList.appendChild(option);
+          });
+        });
+      }
+      function getVoices() {
+        return new Promise((resolve, reject) => {
+          let intervalID;
+
+          intervalID = setInterval(() => {
+            if (tts.getVoices().length !== 0) {
+              resolve(tts.getVoices());
+              clearInterval(intervalID);
+            }
+          }, 10);
+        });
+      }
+    </script>
+  </body>
+</html>
